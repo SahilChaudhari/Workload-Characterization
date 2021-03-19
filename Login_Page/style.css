@@ -1,0 +1,89 @@
+#overall{
+    background-image:url('code3.jpg');
+    opacity: 0.9;
+    background-repeat: no-repeat ;
+    height: 100vh;
+    background-size: cover;
+    color: white;
+    width: 100%;
+    position: relative;
+}
+
+#overall{
+    border:black 5px;
+    border-style: ridge;
+}
+
+.jumbotron{
+    background-color: black ;
+    color: white;
+    text-align: center;
+    margin: 0px 0 0px 0;
+    border:black 5px;
+    border-style: ridge;
+    opacity: 0.8;
+    height: 250px;
+}
+
+#buttons{
+    justify-content: center;
+    width: 100%;
+    margin : 30px;
+   display: none;
+}
+
+.btn{
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    width: 30%;
+    margin: 0 20px 0 20px;
+    background-image: linear-gradient(darkgreen,black);
+    
+}
+.btn:hover{
+    opacity: 0.8
+}
+
+.btn1{
+    visibility: visible;
+}
+.btn2{
+    visibility: visible;
+}
+
+.btn3{
+    margin:auto;
+}
+.form-control{
+    width: 100%;
+}
+
+.login-form{
+    margin: auto;
+    width:550px;
+    font-size: 17px;
+    /* display: none; */
+}
+
+.form-field{
+    margin: 15px;
+    
+}
+
+.form-field input{
+    width: 55%;
+/*    float: right;*/
+}
+.form-field label{
+    width: 40%;
+}
+
+.LoginHead{
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: white 3px ridge;
+/*    border-style: ridge;*/
+}
