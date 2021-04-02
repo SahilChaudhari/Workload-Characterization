@@ -1,0 +1,119 @@
+.maincontainer{
+    padding: 0;
+    margin : 0;
+    border : 0;
+}
+
+#overall{
+    background-image:url('/images/code3.jpg');
+    opacity: 0.9;
+    background-repeat: no-repeat ;
+    height: 100vh;
+    background-size: cover;
+    color: white;
+    width: 100%;
+    position: relative;
+    border:black 5px;
+    border-style: ridge;
+}
+
+
+
+.jumbotron{
+    background-color: black ;
+    color: white;
+    text-align: center;
+    margin: 0px 0 0px 0;
+    border:black 5px;
+    border-style: ridge;
+    opacity: 0.8;
+    height: 250px;
+}
+
+#buttons{
+    justify-content: center;
+    width: 100%;
+    margin : 30px;
+   display: block;
+}
+
+.btn{
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    width: 30%;
+    margin: 0 20px 0 20px;
+    background-image: linear-gradient(darkgreen,black);
+    
+}
+.btn:hover{
+    opacity: 0.8
+}
+
+.btn1{
+    visibility: visible;
+}
+.btn2{
+    visibility: visible;
+}
+
+.btnl1, .btnr1, .btnr2,.btnl2{
+    width: auto;
+    margin:auto;
+}
+.form-control{
+    width: 100%;
+}
+
+.loginreg-form{
+    margin: auto;
+    width:50%;
+    font-size: 17px;
+    
+}
+
+.login-form{
+    display:none;
+}
+.reg-form{
+    display:none;
+}
+.form-field{
+    margin: 2%;
+}
+
+
+.form-field input{
+    width: 60%;
+
+}
+
+.form-field label{
+    width: 35%;
+    padding : 0;
+    margin:0
+}
+
+@media screen and (max-width: 1000px) {
+    .login-form{
+        width: 70%;
+    }
+    .form-field input{
+        width: 100%;
+    }
+  }
+
+
+.LoginHead{
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: white 3px ridge;
+}
+
+/* error messages inside the form */
+.user-exist-alert{
+    width: 100%;
+    display: none;
+}

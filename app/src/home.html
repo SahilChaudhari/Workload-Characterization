@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      IDE page
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/style_home.css">
+  </head>
+  <body>
+    <div class="jumbotron">
+        <div class="container-fluid">
+          <h1>
+            Welcome to our C++ compiler IDE.
+        </h1>
+        <p>
+          Our IDE will provide you best experience of writing code with 
+          custom test cases to test feature.
+        </p>
+    </div>
+    </div>
+
+    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">
+            Main page
+          </a>
+          <button type="button" class="navbar-toggle" data-target="#navbarCollapse" data-toggle="collapse">
+            <span class="sr-only">
+              Toggle navigation
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+          </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbarCollapse">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="#">
+              IDE
+            </a>
+          </li>
+          <li>
+            <a href="#">
+            Setting &nbsp
+            <i class="glyphicon glyphicon-cog"></i>
+            </a>
+            </li>
+        </ul>
+        <form class="navbar-form navbar-right" method="post" action='/logout'>
+          <!-- <input class="btn btn-danger" type="button" value="Logout"> -->
+          
+            <button type="submit" class="btn btn-danger">logout</button>
+         
+        
+        </form>
+      </div>
+  </div>
+  </nav>
+
+  <div id="code-box" class="container-fluid" style="margin-top:60px">
+    <h2>
+      Import your .cpp file here:
+    </h2>
+</div>
+<div class="file-upload">
+  <div class="file-upload__input"><input type="file" name="code" id="codefile">
+  </div>
+  <button class="file-upload__button" type="button">Choose File</button>
+  <span class="file-upload__lable"></span>
+  
+</div>
+<div id="testcase">
+  <form>
+    <label for="testcase_heading"><h2>Insert your testcase</h2></label>
+    <div class="test_case">
+    <textarea id="testcase_body" name="testcase_body" rows="5" cols="50">
+    </textarea>
+      <br><br>
+      <input class="btn btn-success btn-lg" type="submit" value="Run">
+    </div>
+  </form>
+</div>
+<div id="result">
+  <form>
+    <label for="output_heading"><h2>Result</h2></label>
+  </form>
+  </div>
+<div id="output">
+  <div class="output_container">
+  </div>
+</div>
+  <!-- <script src="js.js">
+  </script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+  </script>
+  <script src="js/bootstrap.min.js">
+  </script>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CodeThon</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel = "stylesheet" type = "text/css" href = "/css/style.css">
+
+    </head>
+    <body>
+
+        <div class="container-fluid maincontainer">
+            
+        <div class="jumbotron row">
+            <h1>CodeThon</h1>
+            <p>Giving you the power to make the world walk on the talk of your code.<br/>
+                <b>Lets Code Together</b>
+            </p>
+
+        </div>
+
+        <div class="container-fluid" id="overall">
+            
+            
+            <!-- Login/Sign up buttons -->
+            <div id="buttons" class="text-center row">
+                <button type="button" class="btn btn-primary btn1">Login</button>
+                <button type="button" class="btn btn-primary btn2">Sign Up</button>
+            </div>
+
+            <!--Login form-->
+            <div class="container-fluid row loginreg-form login-form">
+
+                <h2 class="text-center LoginHead"><b>Login</b></h2>
+
+                <form method='post' action='/login'>                
+                
+                <!-- Email input -->
+                <div class="form-field">
+                    <label class="form-label col-md-3" for="Email">Email address</label>   
+                    <input name="email" type="email" id="email" class="form-control" required/>
+        
+                </div>
+
+                <!-- Password input -->
+                <div class="form-field">
+                    <label class="form-label col-md-4" for="Password">Password</label>
+                
+                    <input name="password" type="password" id="pass1" class="form-control" required/>
+                </div>
+
+
+                <div class="text-center form-field">
+                <!-- Simple link -->
+                    <a href="#!">Forgot password?</a>
+                </div>
+
+                <!-- Submit button -->
+                <div class="col form-field">   
+                    <button type="submit" class="btn btn-primary btn-block btnl1">Log me in</button>
+                </div>
+
+                <div class="col form-field">
+                    <button type="button" class="btn btn-primary btn-block btnl2">Not a User, Register Instead?</button>
+                </div>
+
+            </form>
+            </div>
+
+            <!--Registration form-->
+            <div class="container-fluid row loginreg-form reg-form">
+
+                <h2 class="text-center LoginHead"><b>Register</b></h2>
+
+                <form method='post' action='/register'>                
+                
+                    <!-- user exist error message -->
+                <div class="form-field alert alert-danger user-exist-alert" role="alert">
+                    A
+                </div>
+
+                <!-- Username input -->
+                <div class="form-field">
+                    <label class="form-label col-md-3" for="Email">Username</label>   
+                    <input name ="uname" type="name" id="email" class="form-control" required/>
+        
+                </div>
+                
+                <!-- Email input -->
+                <div class="form-field">
+                    <label class="form-label col-md-3" for="Email">Email address</label>   
+                    <input name="email" type="email" id="email" class="form-control" required/>
+        
+                </div>
+
+                <!-- Password input -->
+                <div class="form-field">
+                    <label class="form-label col-md-4" for="Password">Password</label>
+                
+                    <input name ="password" type="password" id="pass1" class="form-control" required/>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-field">
+                    <label class="form-label col-md-4" for="ConfirmPassword">Confirm Password</label>
+                
+                    <input name="passcheck" type="password" id="pass2" class="form-control" required/>
+                </div>
+    
+
+                <div class="text-center form-field">
+                <!-- Simple link -->
+                    <a href="#!">Forgot password?</a>
+                </div>
+
+                <!-- Submit button -->
+                <div class="col form-field">   
+                    <button type="submit" class="btn btn-primary btn-block btnr1">Register me</button>
+                </div>
+
+                <!-- Login inside the Registration -->
+                
+                <div class="col form-field">
+                    <button type="button" class="btn btn-primary btn-block btnr2">Login Instead?</button>
+                </div>
+
+            </form>
+
+            </div>
+        
+        </div>
+        </div>
+
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        
+        <script src="jquery.js"></script>
+
+    </body>
+
+</html>
