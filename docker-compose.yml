@@ -1,0 +1,19 @@
+version: '3.8'
+
+services: 
+    nodejs:
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        image: app
+        ports: 
+            - 3001:3000
+            # http://localhost:{RHS port} and LHS where express app is listning
+    rabbitmq:
+        image: rabbitmq:3-management
+        hostname: my-rabbit
+        ports:
+            # rabbitmqs will listen on 5672 port and http://localhost:15672 is UI page for 
+            # rabbitmq setup
+            - 5672:5672
+            - 15672:15672
