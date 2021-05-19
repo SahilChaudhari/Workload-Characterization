@@ -1,7 +1,6 @@
-
 FROM node:15.5.1
 
-WORKDIR /appContainer
+WORKdir /appContainer
 
 ENV PORT 3000
 
