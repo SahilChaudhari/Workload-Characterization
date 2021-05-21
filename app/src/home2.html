@@ -1,0 +1,202 @@
+<!-- https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/ -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      IDE page
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/style_home2.css">
+  </head>
+  <body>
+    <div class="jumbotron">
+        <div class="container-fluid">
+          <h1>
+            Welcome to our C++ compiler IDE.
+        </h1>
+        <p>
+          Our IDE will provide you best experience of writing code with 
+          custom test cases to test feature.
+        </p>
+    </div>
+    </div>
+
+    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <!-- <a class="navbar-brand">
+            Main page
+          </a> -->
+          <button type="button" class="navbar-toggle" data-target="#navbarCollapse" data-toggle="collapse">
+            <span class="sr-only">
+              Toggle navigation
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+          </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbarCollapse">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="http://localhost:3000/home">
+              IDE
+            </a>
+          </li>
+          <li>
+            <a href="http://localhost:3000/home/setting">
+            Setting &nbsp
+            <i class="glyphicon glyphicon-cog"></i>
+            </a>
+            </li>
+        </ul>
+        <form class="navbar-form navbar-right" method="post" action='/logout'>
+            <!-- <input class="btn btn-danger" type="button" value="Logout"> -->
+              <button type="submit" class="btn btn-danger">logout</button>
+
+          </form>
+      </div>
+  </div>
+  </nav>
+
+<div id="code-box" class="container-fluid" style="margin-top:60px">
+    <h2>
+      Import your .cpp file here:
+    </h2>
+</div>
+<!-- file upload -->
+    <div class="upload">
+        <form enctype="multipart/form-data" id="uploadform">
+            <div id = 'fileupload' class="file-upload-wrapper" datatext = "Select your .cpp file">  
+                <input id="fileselector" name="fileuploadfield" type="file" class="file-upload-field" value=""/>
+            </div>
+            <div class="fileuploadBtn">    
+                <input class="uploadbtn btn btn-danger" type="submit" value="Upload"/>
+            </div>
+
+        </form>
+        
+    </div>
+    <!-- <div id="upload_success_message" class="alert alert-primary">dskfjakd</div> -->
+    <div id="upload_success_message" class="alert alert-success" style="display:none;">
+        <a class="close" data-dismiss="alert"> &times; </a>
+        <strong> Success!</strong>
+        Your File is saved! It will be persistant across refreshes
+    </div>
+
+
+  </div>
+  <!-- test case -->
+  <div id="testcase">
+    <form id="testcaseform" name="testcaseform">
+        <label for="testcase_heading"><h2>Insert your testcase</h2></label>
+      
+        <div class="test_case">
+            <textarea id="testcase_body" name="testcase_body" rows="5" cols="50"></textarea>
+            <br><br>
+            <input class="btn btn-success btn-lg" type="submit" value="submit">
+        </div>
+    </form>
+  </div>
+
+<div id="result">
+  <form>
+    <label for="output_heading"><h2>Result</h2></label>
+  </form>
+  </div>
+<div id="output">
+  <div class="output_container">
+  </div>
+</div>
+
+
+
+<script src="jquery-3.5.1.min.js"></script> 
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+<script>
+  const fileselector = document.getElementById('fileselector');
+  const fileupload = document.getElementById('fileupload');
+  fileselector.addEventListener('change',(event) => {
+    const fileList = event.target.files;
+    fileupload.setAttribute("datatext",fileList[0].name);
+    fileupload.style.zIndex = 30;
+    $('.uploadbtn').removeClass('btn-danger').addClass('btn-success');
+  })
+
+
+
+   $('#testcaseform').submit(function (event) {
+        event.preventDefault();
+        console.log("Got into here")
+        let comment=$('#testcase_body').val();
+        console.log(comment)
+
+        $.ajax({
+            url: 'http://localhost:3000/test',
+            type: 'POST',
+            data: {testcase: comment },
+            success: function (data) {
+                alert(data);
+            }
+        });
+
+    });
+
+
+    // uploading the file
+    $('#uploadform').submit(function (event) {
+        event.preventDefault();
+        console.log("Got into here")
+        // let comment=$('#fileselector').val();
+        // console.log(comment)
+
+        var files = $('#fileselector').get(0).files,
+        formData = new FormData();
+
+        // Append the files to the formData.
+        for (var i=0; i < files.length; i++) {
+            var file = files[i];
+            formData.append( "photos",file, file.name);
+        }
+        uploadFiles(formData);
+        console.log("Giving out the success mesasge");
+
+        document.getElementById("upload_success_message").style.display="block"
+
+
+    });
+
+    // function for uploading the file
+    function uploadFiles(formData) {
+    $.ajax({
+        url: 'http://localhost:3000/upload',
+        method: 'post',
+        data: formData,
+        processData: false,
+        contentType: false
+    })
+    
+
+}
+
+
+</script>
+
+<!-- <script src="js/bootstrap.min.js"> -->
+<!-- </script> -->
+
+</body>
+</html>

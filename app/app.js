@@ -5,6 +5,8 @@ const path = require('path');
 const { nextTick } = require('process');
 const fs = require('fs')
 const alert = require('alert') 
+const formidable = require('formidable');
+const upload = require('express-fileupload');
 
 const PORT = 3000
 const SESS_LIFETIME = 1000 * 60 * 60 * 2  // 2 hrs in ms
@@ -19,6 +21,7 @@ app.use(express.static(__dirname))
 app.use(bodyParsor.urlencoded({
     extended: true
 }))
+app.use(upload())
 
 app.use(session({
     name : SESS_NAME,
@@ -61,9 +64,13 @@ app.get('/',redirectHome,(req,res)=>{
 
 
 app.get('/home',redirectLogin,(req,res)=>{
-    res.sendFile('src/home.html',{root:"."})
+    res.sendFile('src/home2.html',{root:"."})
 })
 
+app.get("/home/setting",redirectLogin,(req,res)=>{
+    console.log("Got the setting request")
+    res.sendFile('src/password_change.html',{root:"."})
+})
 
 app.post('/login',(req,res) => {
     console.log("Server has received the Login Request")
@@ -133,8 +140,54 @@ app.post('/logout',(req,res)=>{
     }res.redirect('/');
 })
 
+
+// getting the testcases
+app.post("/test",(req,res)=>{
+    console.log("got a test request")
+    // console.log(req)
+    console.log(req.body.testcase)
+})
+
+
+// getting the upload
+app.post('/upload', (req, res)=>{
+    console.log("Entered the upload section")
+    console.log("Body",req.body)
+    console.log("Files",req.files)
+    console.log()
+    try {
+        if (req.files){
+            // console.log(req.files);
+            // fileuploadfield name of file input tag
+            var file = req.files.photos;
+            console.log(file)
+            var filename = file.name;
+            const extension = path.extname(filename);
+            const allowed_extension = /cpp/;
+            if(!allowed_extension.test(extension)) throw "Unsupported extension";
+            console.log("filename",filename);
+            console.log(req.session.user)
+            file.mv('./uploads/'+JSON.stringify(req.session.user)+".cpp",function(err) {
+                
+                if(err){
+                    alert("Unable to upload the file! Please try again later")
+                    response.json({status: 200});
+                } else {
+                    // res.send('<script>alert("File uploaded")</script>');
+                    alert("File uploaded successfully")
+                    res.json({status: 400});
+                }
+            });
+        }else{
+            alert("Please add a file")
+        } 
+    } catch (err) {
+        console.log(err);
+        res.send(`<script>alert(${err})</script>`);
+    }
+});
+
 app.listen(PORT, ()=>{
     console.log(`Listening to PORT: http://localhost:${PORT}`)
 })
-
 

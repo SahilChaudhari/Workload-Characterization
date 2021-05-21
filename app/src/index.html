@@ -80,10 +80,6 @@
 
                 <form method='post' action='/register'>                
                 
-                    <!-- user exist error message -->
-                <div class="form-field alert alert-danger user-exist-alert" role="alert">
-                    A
-                </div>
 
                 <!-- Username input -->
                 <div class="form-field">
@@ -103,16 +99,20 @@
                 <div class="form-field">
                     <label class="form-label col-md-4" for="Password">Password</label>
                 
-                    <input name ="password" type="password" id="pass1" class="form-control" required/>
+                    <input name ="password" type="password" id="pass11" class="form-control" onkeyup='check();' required/>
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="form-field">
                     <label class="form-label col-md-4" for="ConfirmPassword">Confirm Password</label>
                 
-                    <input name="passcheck" type="password" id="pass2" class="form-control" required/>
+                    <input name="passcheck" type="password" id="pass22" class="form-control" onkeyup='check();' required/>
                 </div>
-    
+
+                <!-- error message -->
+                <div class="form-field alert alert-danger" id="give_warning">
+                    All fields are necessary
+                </div>
 
                 <div class="text-center form-field">
                 <!-- Simple link -->
@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- Submit button -->
-                <div class="col form-field">   
+                <div class="col form-field wrapper">   
                     <button type="submit" class="btn btn-primary btn-block btnr1">Register me</button>
                 </div>
 

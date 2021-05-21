@@ -63,6 +63,14 @@
     width: auto;
     margin:auto;
 }
+.btnr1{
+    /* cursor: not-allowed; */
+    pointer-events:none;
+}
+.wrapper{
+    cursor: not-allowed;
+}
+
 .form-control{
     width: 100%;
 }
