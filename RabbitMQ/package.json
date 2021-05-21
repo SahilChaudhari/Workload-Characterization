@@ -1,0 +1,17 @@
+{
+  "name": "Documents",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "IDE": "node IDE.js",
+    "testcase": "node testcase.js",
+    "compile": "node compiler.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.7.1"
+  }
+}
