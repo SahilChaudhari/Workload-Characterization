@@ -7,6 +7,7 @@ const fs = require('fs')
 const alert = require('alert') 
 const formidable = require('formidable');
 const upload = require('express-fileupload');
+const amqp = require("amqplib");
 
 const PORT = 3000
 const SESS_LIFETIME = 1000 * 60 * 60 * 2  // 2 hrs in ms
@@ -53,6 +54,31 @@ const redirectHome = (req,res, next)=>{
         next()
     }
 }
+
+
+async function connect(param){
+    try{
+        const connnection = await amqp.connect("amqp://localhost:5672")
+        const channel = await connnection.createChannel()
+        // make sure queue exit if not will create one
+        const result1 = channel.assertQueue("jobs");
+        channel.sendToQueue("jobs", Buffer.from(JSON.stringify(param)))
+        // return channel
+    }
+    catch{
+        console.log("No connection")
+    }
+}
+
+
+// getting the testcases
+app.post("/test",(req,res)=>{
+    console.log("got a test request")
+    // console.log(req)
+    console.log(req.body.testcase)
+    temp = connect(req.session.user)
+  
+})
 
 app.get('/',redirectHome,(req,res)=>{
     console.log("Got a request! Sending Login Page")
@@ -140,13 +166,6 @@ app.post('/logout',(req,res)=>{
     }res.redirect('/');
 })
 
-
-// getting the testcases
-app.post("/test",(req,res)=>{
-    console.log("got a test request")
-    // console.log(req)
-    console.log(req.body.testcase)
-})
 
 
 // getting the upload
