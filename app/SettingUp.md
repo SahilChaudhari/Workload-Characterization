@@ -24,3 +24,5 @@
 - - ```sudo docker stop instance_name``` stop a runnning instance of the image
 - -  ```sudo docker run -p 8000:80 --name server_instance -d server_image``` -d carries the image name whose instance you want to create. -p tells about port redirection.
 - - To see the logs created by the instance ```sudo docker logs instance_names```
+
+- - To enter into the container  ```docker exec -it container_id bash``` 

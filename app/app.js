@@ -5,20 +5,26 @@ const path = require('path');
 const { nextTick } = require('process');
 const fs = require('fs')
 const alert = require('alert') 
+const formidable = require('formidable');
+const upload = require('express-fileupload');
+const amqp = require("amqplib");
 
 const PORT = 3000
 const SESS_LIFETIME = 1000 * 60 * 60 * 2  // 2 hrs in ms
 const SESS_NAME = "Parul"
 const SESS_SECRET = 'ASDGKJASHNF'
 const users = [{ id:1, name:'Parul',email:"a@gmail.com", password:"secret"},
-]
+               { id:2, name:'Sahil',email:"b@gmail.com", password:"123"},
+              ]
 
-const app = express()
+const app = express();
+
 
 app.use(express.static(__dirname))
 app.use(bodyParsor.urlencoded({
     extended: true
 }))
+app.use(upload())
 
 app.use(session({
     name : SESS_NAME,
@@ -31,6 +37,20 @@ app.use(session({
         secure : false 
     }
 }))
+
+// async function connect(param){
+//     try{
+//         const connnection = await amqp.connect("amqp://localhost:5672")
+//         const channel = await connnection.createChannel()
+//         // make sure queue exit if not will create one
+//         const result1 = channel.assertQueue("fname");
+//         channel.sendToQueue("fname", Buffer.from(JSON.stringify(param)))
+//         // return channel
+//     }
+//     catch{
+//         console.log("No connection")
+//     }
+// }
 
 // If they are not logged in, then redirect them to login
 const redirectLogin = (req,res,next) =>{
@@ -61,9 +81,13 @@ app.get('/',redirectHome,(req,res)=>{
 
 
 app.get('/home',redirectLogin,(req,res)=>{
-    res.sendFile('src/home.html',{root:"."})
+    res.sendFile('src/home2.html',{root:"."})
 })
 
+app.get("/home/setting",redirectLogin,(req,res)=>{
+    console.log("Got the setting request")
+    res.sendFile('src/password_change.html',{root:"."})
+})
 
 app.post('/login',(req,res) => {
     console.log("Server has received the Login Request")
@@ -133,8 +157,83 @@ app.post('/logout',(req,res)=>{
     }res.redirect('/');
 })
 
-app.listen(PORT, ()=>{
-    console.log(`Listening to PORT: http://localhost:${PORT}`)
+// getting the testcases
+app.post("/test",(req,res)=>{
+    console.log("got a test request")
+    // console.log(req)
+    console.log(req.body.testcase)
+    var content = req.body.testcase;
+    fs.writeFile('./uploads/'+JSON.stringify(req.session.user)+'.txt', content, err => {
+        if (err) {
+          console.error('txt write error ',err)
+          return
+        }
+    })
+    // temp = connect(req.session.user)
+    const {exec} = require("child_process");
+    exec(`g++ ./uploads/${req.session.user}.cpp -o ./uploads/${req.session.user}`, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: Success`);
+        const {exec} = require("child_process");
+        exec(`./uploads/${req.session.user} < ./uploads/${req.session.user}.txt`, (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+        });
+        return;
+    });
 })
+
+// getting the upload
+app.post('/upload', (req, res)=>{
+    console.log("Entered the upload section")
+    console.log("Body",req.body)
+    console.log("Files",req.files)
+    console.log(process.cwd())
+    try {
+        if (req.files){
+            // console.log(req.files);
+            // fileuploadfield name of file input tag
+            var file = req.files.photos;
+            var filename = file.name;
+            const extension = path.extname(filename);
+            const allowed_extension = /cpp/;
+            if(!allowed_extension.test(extension)) throw "Unsupported extension";
+            console.log("filename",filename);
+            console.log(req.session.user);
+            console.log();
+            file.mv("./uploads/"+JSON.stringify(req.session.user)+".cpp",function(err) {
+                if(err){
+                    alert("Unable to upload the file! Please try again later")
+                    res.json({status: 200});
+                } else {
+                    console.log("msg send");
+                    alert("File uploaded successfully");
+                    res.json({status: 400});
+                }
+            });            
+        }else{
+            alert("Please add a file")
+        }
+    } catch (err) {
+        console.log(err);
+        res.send(`<script>alert(${err})</script>`);
+    }
+});
+
+app.listen(PORT, () => console.log(`Listening to PORT: http://localhost:${PORT}`))
 
 

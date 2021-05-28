@@ -10,21 +10,27 @@ async function connect(){
         // make sure queue exit if not will create one
         const result1 = channel.assertQueue("jobs");
         const result2 = channel.assertQueue("testcases");
+        const result3 = channel.assertQueue("fname");
         const {exec} = require("child_process");
-        exec(`g++ ${f_name}.cpp -o ${f_name}`, (error, stdout, stderr) => {
-            if (error) {
-                console.log(`error: ${error.message}`);
-                channel.sendToQueue("testcases", Buffer.from(JSON.stringify(error.message)))
+        channel.consume("fname",message => {
+            f_name = JSON.parse(message.content.toString() );
+            console.log(`Recieved job successfully with file ${f_name}`);
+            channel.ack(message);
+            exec(`g++ ${f_name}.cpp -o ${f_name}`, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    channel.sendToQueue("testcases", Buffer.from(JSON.stringify(error.message)))
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    channel.sendToQueue("testcases", Buffer.from(JSON.stringify(stderr)))
+                    return;
+                }
+                console.log(`stdout: Success`);
+                channel.sendToQueue("jobs", Buffer.from(JSON.stringify(f_name)))
                 return;
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                channel.sendToQueue("testcases", Buffer.from(JSON.stringify(stderr)))
-                return;
-            }
-            console.log(`stdout: Success`);
-            channel.sendToQueue("jobs", Buffer.from(JSON.stringify(f_name)))
-            return;
+            });
         });
         // send to queue
     }

@@ -1,6 +1,4 @@
 const amqp = require("amqplib");
-// json object
-const msg = {number: process.argv[2]}
 var input = connect();
 console.log(input)
 async function connect(){
