@@ -89,11 +89,11 @@
         
     </div>
     <!-- <div id="upload_success_message" class="alert alert-primary">dskfjakd</div> -->
-    <div id="upload_success_message" class="alert alert-success" style="display:none;">
+    <!-- <div id="upload_success_message" class="alert alert-success" style="display:none;">
         <a class="close" data-dismiss="alert"> &times; </a>
         <strong> Success!</strong>
         Your File is saved! It will be persistant across refreshes
-    </div>
+    </div> -->
 
 
   </div>
@@ -108,6 +108,11 @@
             <input class="btn btn-success btn-lg" type="submit" value="submit">
         </div>
     </form>
+  </div>
+
+  <!-- Output for the test case -->
+  <div id="code-box" class="container-fluid scroll output_box" style="margin-top:20px">
+    <div id="content_to_be_changed">result_output </div>
   </div>
 
 <div id="result">
@@ -149,7 +154,10 @@
             type: 'POST',
             data: {testcase: comment },
             success: function (data) {
-                alert(data);
+                //alert(data);
+                // adding data to html element
+                $("#content_to_be_changed").html(data);
+                $(".output_box").css("display", "block");
             }
         });
 
@@ -172,9 +180,7 @@
             formData.append( "photos",file, file.name);
         }
         uploadFiles(formData);
-        console.log("Giving out the success mesasge");
-
-        document.getElementById("upload_success_message").style.display="block"
+        console.log("Giving out the mesasge");
 
 
     });

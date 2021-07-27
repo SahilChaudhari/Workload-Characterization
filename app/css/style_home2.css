@@ -104,3 +104,16 @@ body{
 .height_zero{
     height: 0;
 }
+
+.output_box{
+    background-color:white;
+    border: 5px ;
+    width: 600px;
+    display: none;
+    
+}
+
+#content_to_be_changed{
+    margin: 0 auto;
+    position: relative;
+}

@@ -74,10 +74,11 @@ async function connect(param){
 // getting the testcases
 app.post("/test",(req,res)=>{
     console.log("got a test request")
-    // console.log(req)
     console.log(req.body.testcase)
-    temp = connect(req.session.user)
-  
+    temp = connect(req.session.user)  
+    console.log("Got the setting request")
+    res.write("this is the output of program execution\n hello");
+    res.end();
 })
 
 app.get('/',redirectHome,(req,res)=>{
@@ -176,7 +177,8 @@ app.post('/upload', (req, res)=>{
     console.log()
     try {
         if (req.files){
-            // console.log(req.files);
+            console.log("I am taking the upload");
+            console.log(req.files);
             // fileuploadfield name of file input tag
             var file = req.files.photos;
             console.log(file)
@@ -189,20 +191,22 @@ app.post('/upload', (req, res)=>{
             file.mv('./uploads/'+JSON.stringify(req.session.user)+".cpp",function(err) {
                 
                 if(err){
-                    alert("Unable to upload the file! Please try again later")
-                    response.json({status: 200});
+                    console.log(err);
+                    alert("Unable to upload the file! Please try again later");
+                    return;
                 } else {
-                    // res.send('<script>alert("File uploaded")</script>');
-                    alert("File uploaded successfully")
-                    res.json({status: 400});
+                    alert("File uploaded successfully");
+                    return;
                 }
             });
         }else{
-            alert("Please add a file")
+            alert("Please add a file");
+            return;
         } 
     } catch (err) {
         console.log(err);
-        res.send(`<script>alert(${err})</script>`);
+        alert("Unable to upload file");
+        return;
     }
 });
 
